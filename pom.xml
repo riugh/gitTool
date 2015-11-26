@@ -13,6 +13,13 @@
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>jgit-repository</id>
+            <url>https://repo.eclipse.org/content/groups/releases/</url>
+        </repository>
+    </repositories>
     
     <dependencies>
         <dependency>
@@ -27,6 +34,27 @@
             <artifactId>org.eclipse.jgit</artifactId>
             <version>4.1.0.201509280440-r</version>
         </dependency>
+
+        <!-- Smart HTTP Servlet -->
+        <dependency>
+            <groupId>org.eclipse.jgit</groupId>
+            <artifactId>org.eclipse.jgit.http.server</artifactId>
+            <version>4.1.1.201511131810-r</version>
+        </dependency>
+
+        <!-- AWT UI Helpers -->
+        <dependency>
+            <groupId>org.eclipse.jgit</groupId>
+            <artifactId>org.eclipse.jgit.ui</artifactId>
+            <version>4.1.1.201511131810-r</version>
+        </dependency>
+
+        <!-- JUnit Test Support -->
+        <dependency>
+        <groupId>org.eclipse.jgit</groupId>
+        <artifactId>org.eclipse.jgit.junit</artifactId>
+        <version>4.1.1.201511131810-r</version>
+    </dependency>
     </dependencies>
 
     <build>
