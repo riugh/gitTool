@@ -55,7 +55,6 @@ public class MainClass {
         Repository existingRepo = getExistingRepo(GIT_EXAMPLE_REPO);
         Git git = new Git(existingRepo);
 
-
         deleteBranch(git, "notExistingBranch");
         String newBranchName = "PBI-8135";
         createNewBranch(git, newBranchName);
