@@ -1,41 +1,25 @@
 package n.p.main;
 
-import org.eclipse.jgit.api.AddCommand;
+import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.ListBranchCommand;
 import org.eclipse.jgit.api.LogCommand;
-import org.eclipse.jgit.api.PullCommand;
 import org.eclipse.jgit.api.Status;
-import org.eclipse.jgit.api.errors.AbortedByHookException;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.InvalidRefNameException;
-import org.eclipse.jgit.api.errors.InvalidRemoteException;
-import org.eclipse.jgit.api.errors.NoMessageException;
 import org.eclipse.jgit.api.errors.RefAlreadyExistsException;
-import org.eclipse.jgit.api.errors.RefNotFoundException;
-import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.IndexDiff;
-import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.notes.Note;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
-import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.FetchResult;
-import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
-import java.util.Collection;
 import java.util.List;
 
 public class MainClass {
@@ -52,12 +36,18 @@ public class MainClass {
     private static final String GIT_EXAMPLE_REPO = "D:\\gitTool\\";
 
     public static void main(String... args) throws Exception {
+        /*
         Repository existingRepo = getExistingRepo(GIT_EXAMPLE_REPO);
         Git git = new Git(existingRepo);
-
+*/
+        CloneCommand cloneCommand = new CloneCommand();
+        cloneCommand.setURI("https://github.com/eclipse/jgit.git");
+        cloneCommand.setCloneAllBranches(true);
+        Git git = cloneCommand.call();
+        /*
         deleteBranch(git, "notExistingBranch");
         String newBranchName = "PBI-8135";
-        createNewBranch(git, newBranchName);
+        createNetwBranch(git, newBranchName);
 
         git.checkout().setName(newBranchName).call();
 
@@ -218,9 +208,9 @@ public class MainClass {
 
     private static void deleteBranch(final Git git, String branchName) throws GitAPIException {
         //try {
-            git.branchDelete().setBranchNames(branchName).call();
+        git.branchDelete().setBranchNames(branchName).call();
         //} catch (RefAlreadyExistsException ex) {
-          //  System.out.println("Branch " + branchName + " has not been created: " + ex.getMessage());
+        //  System.out.println("Branch " + branchName + " has not been created: " + ex.getMessage());
         //}
     }
 
@@ -388,7 +378,7 @@ public class MainClass {
             LogCommand log = git.log();
 
             Ref peeledRef = repository.peel(ref);
-            if(peeledRef.getPeeledObjectId() != null) {
+            if (peeledRef.getPeeledObjectId() != null) {
                 log.add(peeledRef.getPeeledObjectId());
             } else {
                 log.add(ref.getObjectId());
